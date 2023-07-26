@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ChakraProvider } from "@chakra-ui/react";
+import "./styles/index.css";
 
 const DOMAIN = import.meta.env.VITE_DOMAIN;
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
