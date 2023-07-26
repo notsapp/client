@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Center, Grid, GridItem, Text } from "@chakra-ui/react";
 import LogoutButton from "../components/LogoutButton";
 import MessageInput from "../components/MessageInput";
 import Message from "../components/Message";
@@ -27,6 +27,7 @@ type SocketMessage = {
 
 export default function Home() {
   const [messages, setMessages] = useState([] as SocketMessage[]);
+  const [loading, setLoading] = useState(true);
   const { user: currentUser } = useAuth0();
   const messagesContainerRef = useRef(null);
   const { width, height } = useWindowSize();
@@ -67,6 +68,7 @@ export default function Home() {
           const { data: fetchedMessages } = response;
           const sortedMessages = sortMessagesByDateTime(fetchedMessages);
           setMessages(sortedMessages);
+          setLoading(false);
         });
     } catch (err) {
       console.error("unable to fetch messages");
@@ -96,11 +98,7 @@ export default function Home() {
 
   return (
     currentUser && (
-      <Grid
-        gridTemplateRows={"50px 75px 1fr 75px 50px"}
-        w={width}
-        h={height}
-      >
+      <Grid gridTemplateRows={"50px 75px 1fr 75px 50px"} w={width} h={height}>
         <GridItem bgColor={"#215C54"} />
         <GridItem
           bgColor={"#EBE5DE"}
@@ -115,7 +113,13 @@ export default function Home() {
           bgColor={"#EBE5DE"}
           ref={messagesContainerRef}
         >
-          {mappedMessages}
+          {loading ? (
+            <Center h={"100%"}>
+              <Text>Loading...</Text>
+            </Center>
+          ) : (
+            mappedMessages
+          )}
         </GridItem>
         <GridItem bgColor={"#EBE5DE"} display={"flex"} alignItems={"flex-end"}>
           <MessageInput socket={socket} user={currentUser} />
