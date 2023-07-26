@@ -6,6 +6,7 @@ import { User, useAuth0 } from "@auth0/auth0-react";
 import io from "socket.io-client";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { useWindowSize } from "../hooks/hooks";
 
 const SERVER_URL =
   import.meta.env.mode === "development"
@@ -28,6 +29,7 @@ export default function Home() {
   const [messages, setMessages] = useState([] as SocketMessage[]);
   const { user: currentUser } = useAuth0();
   const messagesContainerRef = useRef(null);
+  const { width, height } = useWindowSize();
 
   function sortMessagesByDateTime(messages: SocketMessage[]) {
     messages.forEach((message) => {
@@ -96,8 +98,8 @@ export default function Home() {
     currentUser && (
       <Grid
         gridTemplateRows={"50px 75px 1fr 75px 50px"}
-        w={"100vw"}
-        h={"100vh"}
+        w={width}
+        h={height}
       >
         <GridItem bgColor={"#215C54"} />
         <GridItem
