@@ -30,8 +30,11 @@ function Unavailable() {
       justifyContent={"center"}
       alignItems={"center"}
       textAlign={"center"}
+      bgColor={"#E0F6CA"}
     >
-      <Text>This web application is only available on mobile devices.</Text>
+      <Text color={"#215C54"}>
+        This web application is only available on mobile devices.
+      </Text>
     </Flex>
   );
 }
